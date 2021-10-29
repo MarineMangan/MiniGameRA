@@ -26,30 +26,47 @@ public class TouchTarget : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            debug.text = "coucou";
-            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            debug.text = "x: " + touchPosition.x.ToString() + " y: " + touchPosition.y.ToString() + " z: " + touchPosition.z.ToString();
-            delay = 5.0f;
-            GameObject instance;
-            instance = Instantiate(myGameobject, touchPosition, Quaternion.identity);
-            instance.transform.Translate(touchPosition);
-            instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
-        }//
-
-        //if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        //if (Input.GetMouseButtonDown(0))
         //{
-        //    //debug.text = "coucou";
-        //    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        //    debug.text = "x: " + touchPosition.x.ToString() + " y: " + touchPosition.y.ToString() + " z: " + touchPosition.z.ToString(); 
+        //    debug.text = "coucou";
+        //    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    debug.text = "x: " + touchPosition.x.ToString() + " y: " + touchPosition.y.ToString() + " z: " + touchPosition.z.ToString();
         //    delay = 5.0f;
         //    GameObject instance;
         //    instance = Instantiate(myGameobject, touchPosition, Quaternion.identity);
         //    instance.transform.Translate(touchPosition);
         //    instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
+        //}//
 
-        //}
+        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            ////debug.text = "coucou";
+            //Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+            //debug.text = "x: " + touchPosition.x.ToString() + " y: " + touchPosition.y.ToString() + " z: " + touchPosition.z.ToString();
+            //delay = 5.0f;
+            //GameObject instance;
+            //instance = Instantiate(myGameobject, touchPosition, Quaternion.identity);
+            //instance.transform.Translate(touchPosition);
+            //instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity))
+            {
+                //var hitPos = raycastHit.point;
+
+                //delay = 5.0f;
+                if (raycastHit.collider.tag == "Screen")
+                {
+                    raycastHit.point += new Vector3(0.0f, 0.0f, 0.2f);
+                    GameObject instance;
+                    instance = Instantiate(myGameobject, raycastHit.point, Quaternion.identity);
+                    //instance.transform.Translate(touchPosition);
+                    instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
+                }
+                    
+            }
+
+        }
         if (delay > 0)
             delay -= Time.deltaTime;
         else
