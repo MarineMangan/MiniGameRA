@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Screen
+  - Target
   layers:
   - Default
   - TransparentFX

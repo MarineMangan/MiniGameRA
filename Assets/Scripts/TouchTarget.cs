@@ -6,70 +6,81 @@ using UnityEngine.UI;
 public class TouchTarget : MonoBehaviour
 {
     [SerializeField]
-    private Transform target;
+    private Transform m_target;
 
     [SerializeField]
-    private GameObject myGameobject;
+    private GameObject m_projectile;
 
     [SerializeField]
-    private Text debug;
+    private Transform m_arCamera;
 
-    private float delay = 5.0f;
+    private float m_speed;
+
+    [SerializeField]
+    private Text debugText;
+
+    private static int m_counter;
+    private static bool m_isMovable;
 
     // Start is called before the first frame update
     void Start()
     {
-        debug.text = "Rien";
+        m_speed = 20000;
+        m_counter = 0;
+        m_isMovable = false;
+
+        m_target.LookAt(transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    debug.text = "coucou";
-        //    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    debug.text = "x: " + touchPosition.x.ToString() + " y: " + touchPosition.y.ToString() + " z: " + touchPosition.z.ToString();
-        //    delay = 5.0f;
-        //    GameObject instance;
-        //    instance = Instantiate(myGameobject, touchPosition, Quaternion.identity);
-        //    instance.transform.Translate(touchPosition);
-        //    instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
-        //}//
-
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            ////debug.text = "coucou";
-            //Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            //debug.text = "x: " + touchPosition.x.ToString() + " y: " + touchPosition.y.ToString() + " z: " + touchPosition.z.ToString();
-            //delay = 5.0f;
-            //GameObject instance;
-            //instance = Instantiate(myGameobject, touchPosition, Quaternion.identity);
-            //instance.transform.Translate(touchPosition);
-            //instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity))
+            
+            if(m_counter < 5)
             {
-                //var hitPos = raycastHit.point;
-
-                //delay = 5.0f;
-                if (raycastHit.collider.tag == "Screen")
-                {
-                    raycastHit.point += new Vector3(0.0f, 0.0f, 0.2f);
-                    GameObject instance;
-                    instance = Instantiate(myGameobject, raycastHit.point, Quaternion.identity);
-                    //instance.transform.Translate(touchPosition);
-                    instance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 100.0f));
-                }
-                    
+                GameObject instance = Instantiate(m_projectile, m_arCamera.position, m_arCamera.rotation);
+                instance.GetComponent<Rigidbody>().AddForce(m_arCamera.forward * m_speed * Time.deltaTime);
             }
-
         }
-        if (delay > 0)
-            delay -= Time.deltaTime;
-        else
-            debug.text = "rien";
+        debugText.text = m_counter.ToString();
+
+        if(m_isMovable)
+        {
+            MoveTarget();
+            m_isMovable = false;
+        }
     }
+
+    public void MoveTarget()
+    {
+        Vector3 targetPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+        targetPosition.x = Random.Range(-1.0f, 1.0f);
+        targetPosition.y = Random.Range(-1.0f, 1.0f);
+        targetPosition.z = Random.Range(-1.0f, 1.0f);
+
+        m_target.position = targetPosition;
+    }
+
+    public void SetTargetPosition(Vector3 position)
+    {
+        m_target.position = position;
+    }
+    public static int GetCounter()
+    {
+        return m_counter;
+    }
+
+    public static void Setcounter(int counter)
+    {
+        m_counter = counter;
+    }
+
+    public static void SetIsMovable(bool isMovable)
+    {
+        m_isMovable = isMovable;
+    }
+
 }
