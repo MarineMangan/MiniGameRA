@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Screen
   - Target
+  - Green
+  - Red
+  - Green1
+  - Green2
+  - Red1
+  - Red2
   layers:
   - Default
   - TransparentFX
