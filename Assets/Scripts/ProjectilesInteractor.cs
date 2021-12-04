@@ -7,7 +7,6 @@ public class ProjectilesInteractor : MonoBehaviour
 {
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +32,8 @@ public class ProjectilesInteractor : MonoBehaviour
             }
             if(TouchTarget.GetCounter() == 5)
             {
-                Destroy(collision.gameObject);
+
+                //Destroy(collision.gameObject);
             }
         }
     }
