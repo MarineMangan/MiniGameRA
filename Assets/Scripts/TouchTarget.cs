@@ -14,7 +14,6 @@ public class TouchTarget : MonoBehaviour
 
     [SerializeField]
     private GameObject m_target;
-    //private GameObject m_target;
 
     [SerializeField]
     private GameObject m_projectile;
@@ -33,9 +32,6 @@ public class TouchTarget : MonoBehaviour
 
     [SerializeField]
     private Text m_endGameText;
-
-    [SerializeField]
-    private Text debugText;
 
     private static int m_counter;
     private static bool m_isMovable;
@@ -77,7 +73,6 @@ public class TouchTarget : MonoBehaviour
             }
             
         }
-        debugText.text = m_counter.ToString();
 
         if(m_isMovable)
         {
