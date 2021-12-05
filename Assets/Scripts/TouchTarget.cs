@@ -33,6 +33,7 @@ public class TouchTarget : MonoBehaviour
     [SerializeField]
     private Text m_endGameText;
 
+
     private static int m_counter;
     private static bool m_isMovable;
 
@@ -65,15 +66,13 @@ public class TouchTarget : MonoBehaviour
         }
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            
             if(m_counter < 5)
             {
                 GameObject instance = Instantiate(m_projectile, m_arCamera.position, m_arCamera.rotation);
                 instance.GetComponent<Rigidbody>().AddForce(m_arCamera.forward * m_speed * Time.deltaTime);
             }
-            
         }
-
+        
         if(m_isMovable)
         {
             MoveTarget();

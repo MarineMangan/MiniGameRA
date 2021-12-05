@@ -12,40 +12,64 @@ public class MemoryGame : MonoBehaviour
     private uint m_foundPairs;
 
     [SerializeField]
-    private GameObject m_green1;
-    
-    [SerializeField]
-    private GameObject m_green2;
-    
-    [SerializeField]
-    private GameObject m_red1;
-    
-    [SerializeField]
-    private GameObject m_red2;
+    private GameObject m_green1; //Carte_de_Carreau(1)
 
     [SerializeField]
-    private GameObject m_yellow1;
-    
-    [SerializeField]
-    private GameObject m_yellow2;
-    
-    [SerializeField]
-    private GameObject m_blue1;
-    
-    [SerializeField]
-    private GameObject m_blue2;
+    private GameObject m_green2; //Carte_de_Carreau 
 
     [SerializeField]
-    private GameObject m_red;
+    private GameObject m_red1; //Carte_de_Trefle (1)
 
     [SerializeField]
-    private GameObject m_yellow;
+    private GameObject m_red2; //Carte_de_Trefle  
 
     [SerializeField]
-    private GameObject m_blue;
+    private GameObject m_yellow1; //Carte_de_Pique (1)
+
+    [SerializeField]
+    private GameObject m_yellow2; //Carte_de_Pique 
+
+    [SerializeField]
+    private GameObject m_blue1; //Carte_de_Coeur (1)
+
+    [SerializeField]
+    private GameObject m_blue2; //Carte_de_Coeur 
+
+    [SerializeField]
+    private GameObject m_red; //Trefle
+
+    [SerializeField]
+    private GameObject m_yellow; //Pique
+
+    [SerializeField]
+    private GameObject m_blue; //Coeur 
+
+    [SerializeField]
+    private GameObject m_green; //Carreau
+
+    [SerializeField]
+    private GameObject m_AsCarreau;
     
     [SerializeField]
-    private GameObject m_green;
+    private GameObject m_AsCarreau1;
+    
+    [SerializeField]
+    private GameObject m_AsTrefle;
+    
+    [SerializeField]
+    private GameObject m_AsTrefle1;
+    
+    [SerializeField]
+    private GameObject m_AsPique;
+    
+    [SerializeField]
+    private GameObject m_AsPique1;
+    
+    [SerializeField]
+    private GameObject m_AsCoeur;
+    
+    [SerializeField]
+    private GameObject m_AsCoeur1;
 
     [SerializeField]
     private Text m_gameText;
@@ -53,9 +77,6 @@ public class MemoryGame : MonoBehaviour
     [SerializeField]
     private Text m_endGameText;
 
-
-    [SerializeField]
-    private Text debugText;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +111,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_green1.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsCarreau1.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -98,6 +120,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Green2")
                         {
                             m_green1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCarreau1.SetActive(true);
                             Destroy(m_green1, 1.0f);
                             Destroy(m_green2, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_green, m_green1.transform.position));
@@ -113,19 +136,45 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_green1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCarreau1.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_green1));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
                             if (m_firstTag == "Red2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
+                            }
+
                             else if (m_firstTag == "Red1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
+                            }
+                            
                             else if (m_firstTag == "Yellow1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
+                            }
+                                
                             else if (m_firstTag == "Yellow2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
+                            }
+                                
                             else if (m_firstTag == "Blue1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
+                            }
+                               
                             else if (m_firstTag == "Blue2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
+                            }
+                                
                             m_firstCard = false;
                         }
 
@@ -140,6 +189,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_green2.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsCarreau.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -148,6 +198,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Green1")
                         {
                             m_green2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCarreau.SetActive(true);
                             Destroy(m_green2, 1.0f);
                             Destroy(m_green1, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_green, m_green2.transform.position));
@@ -163,19 +214,44 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_green2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCarreau.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_green2));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
                             if (m_firstTag == "Red2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
+                            }
+
                             else if (m_firstTag == "Red1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
+                            }
+
                             else if (m_firstTag == "Yellow1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
+                            }
+
                             else if (m_firstTag == "Yellow2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
+                            }
+
                             else if (m_firstTag == "Blue1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
+                            }
+
                             else if (m_firstTag == "Blue2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
+                            }
                             m_firstCard = false;
                         }
                     }
@@ -186,6 +262,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_red1.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsTrefle1.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -194,6 +271,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Red2")
                         {
                             m_red1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsTrefle1.SetActive(true);
                             Destroy(m_red1, 1.0f);
                             Destroy(m_red2, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_red, m_red1.transform.position));
@@ -209,19 +287,40 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_red1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsTrefle1.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_red1));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
                             if (m_firstTag == "Green1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
+                            }
                             else if (m_firstTag == "Green2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
+                            }
+                                
                             else if (m_firstTag == "Yellow1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
+                            }
                             else if (m_firstTag == "Yellow2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
+                            }
                             else if (m_firstTag == "Blue1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
+                            }
                             else if (m_firstTag == "Blue2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
+                            }
                             m_firstCard = false;
                         }
                     }
@@ -232,6 +331,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_red2.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsTrefle.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -240,6 +340,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Red1")
                         {
                             m_red2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsTrefle.SetActive(true);
                             Destroy(m_red2, 1.0f);
                             Destroy(m_red1, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_red, m_red2.transform.position));
@@ -255,20 +356,40 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_red2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsTrefle.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_red2));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
                             if (m_firstTag == "Green1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
+                            }
                             else if (m_firstTag == "Green2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
+                            }
                             else if (m_firstTag == "Yellow1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
+                            }
                             else if (m_firstTag == "Yellow2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
+                            }
                             else if (m_firstTag == "Blue1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
+                            }
                             else if (m_firstTag == "Blue2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue2));
-                            
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
+                            }
+
                             m_firstCard = false;
                         }
                     }
@@ -280,6 +401,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_yellow1.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsPique1.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -288,6 +410,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Yellow2")
                         {
                             m_yellow1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsPique1.SetActive(true);
                             Destroy(m_yellow1, 1.0f);
                             Destroy(m_yellow2, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_yellow, m_yellow1.transform.position));
@@ -303,20 +426,40 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_yellow1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsPique1.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
                             if (m_firstTag == "Red1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
+                            }
                             else if (m_firstTag == "Green1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
+                            }
                             else if (m_firstTag == "Green2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
+                            }
                             else if (m_firstTag == "Red2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
+                            }
                             else if (m_firstTag == "Blue1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
+                            }
                             else if (m_firstTag == "Blue2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue2));
-                           
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
+                            }
+
                             m_firstCard = false;
                         }
                     }
@@ -328,6 +471,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_yellow2.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsPique.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -336,6 +480,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Yellow1")
                         {
                             m_yellow2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsPique.SetActive(true);
                             Destroy(m_yellow1, 1.0f);
                             Destroy(m_yellow2, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_yellow, m_yellow2.transform.position));
@@ -351,19 +496,39 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_yellow2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsPique.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
                             if (m_firstTag == "Red1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
+                            }
                             else if (m_firstTag == "Green1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
+                            }
                             else if (m_firstTag == "Green2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
+                            }
                             else if (m_firstTag == "Red2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
+                            }
                             else if (m_firstTag == "Blue1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
+                            }
                             else if (m_firstTag == "Blue2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_blue2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
+                            }
 
                             m_firstCard = false;
                         }
@@ -376,6 +541,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_blue1.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsCoeur1.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -384,6 +550,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Blue2")
                         {
                             m_blue1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCoeur1.SetActive(true);
                             Destroy(m_blue1, 1.0f);
                             Destroy(m_blue2, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_blue, m_blue1.transform.position));
@@ -399,19 +566,39 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_blue1.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCoeur1.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_blue1));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur1));
                             if (m_firstTag == "Red1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
+                            }
                             else if (m_firstTag == "Green1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
+                            }
                             else if (m_firstTag == "Green2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
+                            }
                             else if (m_firstTag == "Red2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
+                            }
                             else if (m_firstTag == "Yellow1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
+                            }
                             else if (m_firstTag == "Yellow2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
+                            }
 
                             m_firstCard = false;
                         }
@@ -424,6 +611,7 @@ public class MemoryGame : MonoBehaviour
                     if (!m_firstCard)
                     {
                         m_blue2.transform.Rotate(Vector3.up, 180.0f);
+                        m_AsCoeur.SetActive(true);
                         m_firstCard = true;
                         m_firstTag = raycastHit.collider.tag;
                     }
@@ -432,6 +620,7 @@ public class MemoryGame : MonoBehaviour
                         if (m_firstTag == "Blue1")
                         {
                             m_blue2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCoeur.SetActive(true);
                             Destroy(m_blue1, 1.0f);
                             Destroy(m_blue2, 1.0f);
                             StartCoroutine(TimerInstantiationCoroutine(m_blue, m_blue2.transform.position));
@@ -447,19 +636,39 @@ public class MemoryGame : MonoBehaviour
                         else
                         {
                             m_blue2.transform.Rotate(Vector3.up, 180.0f);
+                            m_AsCoeur.SetActive(true);
                             StartCoroutine(TimerRotationCoroutine(m_blue2));
+                            StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCoeur));
                             if (m_firstTag == "Red1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle1));
+                            }
                             else if (m_firstTag == "Green1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau1));
+                            }
                             else if (m_firstTag == "Green2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_green2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsCarreau));
+                            }
                             else if (m_firstTag == "Red2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_red2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsTrefle));
+                            }
                             else if (m_firstTag == "Yellow1")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow1));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique1));
+                            }
                             else if (m_firstTag == "Yellow2")
+                            {
                                 StartCoroutine(TimerRotationCoroutine(m_yellow2));
+                                StartCoroutine(TimerActiveGameObjectCoroutine(m_AsPique));
+                            }
 
                             m_firstCard = false;
                         }
@@ -467,6 +676,12 @@ public class MemoryGame : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator TimerActiveGameObjectCoroutine(GameObject target)
+    {
+        yield return new WaitForSeconds(1.0f);
+        target.SetActive(false);
     }
 
     private IEnumerator TimerRotationCoroutine(GameObject target)
@@ -527,16 +742,4 @@ public class MemoryGame : MonoBehaviour
             SceneManager.LoadScene("MainMenuScene");
         }
     }
-
-    //private void LookAtPlayer()
-    //{
-    //    m_green1.transform.LookAt(transform);
-    //    m_green2.transform.LookAt(transform);
-    //    m_red1.transform.LookAt(transform);
-    //    m_red2.transform.LookAt(transform);
-    //    m_yellow1.transform.LookAt(transform);
-    //    m_yellow2.transform.LookAt(transform);
-    //    m_blue1.transform.LookAt(transform);
-    //    m_blue2.transform.LookAt(transform);
-    //}
 }
